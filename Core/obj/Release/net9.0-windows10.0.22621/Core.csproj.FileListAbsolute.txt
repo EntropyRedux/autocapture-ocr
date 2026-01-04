@@ -1,0 +1,12 @@
+C:\Users\mbula\Projects\Repo\AutoCapture-OCR\dev\Core\bin\Release\net9.0-windows10.0.22621\Core.deps.json
+C:\Users\mbula\Projects\Repo\AutoCapture-OCR\dev\Core\bin\Release\net9.0-windows10.0.22621\Core.dll
+C:\Users\mbula\Projects\Repo\AutoCapture-OCR\dev\Core\bin\Release\net9.0-windows10.0.22621\Core.pdb
+C:\Users\mbula\Projects\Repo\AutoCapture-OCR\dev\Core\obj\Release\net9.0-windows10.0.22621\Core.csproj.AssemblyReference.cache
+C:\Users\mbula\Projects\Repo\AutoCapture-OCR\dev\Core\obj\Release\net9.0-windows10.0.22621\Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mbula\Projects\Repo\AutoCapture-OCR\dev\Core\obj\Release\net9.0-windows10.0.22621\Core.AssemblyInfoInputs.cache
+C:\Users\mbula\Projects\Repo\AutoCapture-OCR\dev\Core\obj\Release\net9.0-windows10.0.22621\Core.AssemblyInfo.cs
+C:\Users\mbula\Projects\Repo\AutoCapture-OCR\dev\Core\obj\Release\net9.0-windows10.0.22621\Core.csproj.CoreCompileInputs.cache
+C:\Users\mbula\Projects\Repo\AutoCapture-OCR\dev\Core\obj\Release\net9.0-windows10.0.22621\Core.dll
+C:\Users\mbula\Projects\Repo\AutoCapture-OCR\dev\Core\obj\Release\net9.0-windows10.0.22621\refint\Core.dll
+C:\Users\mbula\Projects\Repo\AutoCapture-OCR\dev\Core\obj\Release\net9.0-windows10.0.22621\Core.pdb
+C:\Users\mbula\Projects\Repo\AutoCapture-OCR\dev\Core\obj\Release\net9.0-windows10.0.22621\ref\Core.dll

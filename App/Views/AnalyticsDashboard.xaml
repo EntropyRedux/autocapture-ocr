@@ -1,0 +1,414 @@
+<Window x:Class="AutoCaptureOCR.App.Views.AnalyticsDashboard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Analytics Dashboard"
+        Height="700"
+        Width="900"
+        WindowStartupLocation="CenterOwner"
+        Background="#1E1E1E"
+        KeyDown="Window_KeyDown">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0"
+                Background="#2D2D30"
+                BorderBrush="#3F3F46"
+                BorderThickness="0,0,0,1"
+                Padding="16,12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock x:Name="TitleTextBlock"
+                               Foreground="White"
+                               FontSize="18"
+                               FontWeight="SemiBold"/>
+                    <TextBlock x:Name="SubtitleTextBlock"
+                               Foreground="#808080"
+                               FontSize="12"
+                               Margin="0,4,0,0"/>
+                </StackPanel>
+
+                <Button Grid.Column="1"
+                        Content="Close"
+                        Width="80"
+                        Height="32"
+                        Background="#2D2D30"
+                        Foreground="White"
+                        BorderBrush="#3F3F46"
+                        BorderThickness="1"
+                        FontSize="12"
+                        Click="CloseButton_Click">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="3">
+                                            <ContentPresenter HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#3F3F46"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- Content -->
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      Padding="16">
+            <StackPanel>
+                <!-- Overview Cards -->
+                <TextBlock Text="Overview"
+                           Foreground="#CCCCCC"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,12"/>
+
+                <Grid Margin="0,0,0,24">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Total Captures Card -->
+                    <Border Grid.Column="0"
+                            Background="#2D2D30"
+                            BorderBrush="#3F3F46"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Padding="16">
+                        <StackPanel>
+                            <TextBlock Text="Total Captures"
+                                       Foreground="#808080"
+                                       FontSize="11"/>
+                            <TextBlock x:Name="TotalCapturesText"
+                                       Foreground="White"
+                                       FontSize="28"
+                                       FontWeight="Bold"
+                                       Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Success Rate Card -->
+                    <Border Grid.Column="2"
+                            Background="#2D2D30"
+                            BorderBrush="#3F3F46"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Padding="16">
+                        <StackPanel>
+                            <TextBlock Text="Success Rate"
+                                       Foreground="#808080"
+                                       FontSize="11"/>
+                            <TextBlock x:Name="SuccessRateText"
+                                       Foreground="#4EC9B0"
+                                       FontSize="28"
+                                       FontWeight="Bold"
+                                       Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Avg Confidence Card -->
+                    <Border Grid.Column="4"
+                            Background="#2D2D30"
+                            BorderBrush="#3F3F46"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Padding="16">
+                        <StackPanel>
+                            <TextBlock Text="Avg Confidence"
+                                       Foreground="#808080"
+                                       FontSize="11"/>
+                            <TextBlock x:Name="AvgConfidenceText"
+                                       Foreground="#569CD6"
+                                       FontSize="28"
+                                       FontWeight="Bold"
+                                       Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Total Words Card -->
+                    <Border Grid.Column="6"
+                            Background="#2D2D30"
+                            BorderBrush="#3F3F46"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Padding="16">
+                        <StackPanel>
+                            <TextBlock Text="Words Extracted"
+                                       Foreground="#808080"
+                                       FontSize="11"/>
+                            <TextBlock x:Name="TotalWordsText"
+                                       Foreground="#DCDCAA"
+                                       FontSize="28"
+                                       FontWeight="Bold"
+                                       Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- Status Breakdown -->
+                <TextBlock Text="Status Breakdown"
+                           Foreground="#CCCCCC"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,12"/>
+
+                <Border Background="#2D2D30"
+                        BorderBrush="#3F3F46"
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        Padding="16"
+                        Margin="0,0,0,24">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="✓ Completed"
+                                       Foreground="#4EC9B0"
+                                       FontSize="12"
+                                       Margin="0,0,0,4"/>
+                            <TextBlock x:Name="CompletedText"
+                                       Foreground="White"
+                                       FontSize="20"
+                                       FontWeight="SemiBold"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="⧗ Processing"
+                                       Foreground="#DCDCAA"
+                                       FontSize="12"
+                                       Margin="0,0,0,4"/>
+                            <TextBlock x:Name="ProcessingText"
+                                       Foreground="White"
+                                       FontSize="20"
+                                       FontWeight="SemiBold"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="✗ Failed"
+                                       Foreground="#F48771"
+                                       FontSize="12"
+                                       Margin="0,0,0,4"/>
+                            <TextBlock x:Name="FailedText"
+                                       Foreground="White"
+                                       FontSize="20"
+                                       FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Confidence Distribution -->
+                <TextBlock Text="Confidence Distribution"
+                           Foreground="#CCCCCC"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,12"/>
+
+                <Border Background="#2D2D30"
+                        BorderBrush="#3F3F46"
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        Padding="16"
+                        Margin="0,0,0,24">
+                    <StackPanel>
+                        <!-- High Confidence -->
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="80"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0"
+                                       Text="High (≥90%)"
+                                       Foreground="#4EC9B0"
+                                       FontSize="12"
+                                       VerticalAlignment="Center"/>
+
+                            <Border Grid.Column="1"
+                                    Background="#3F3F46"
+                                    Height="24"
+                                    CornerRadius="2">
+                                <Border x:Name="HighConfidenceBar"
+                                        Background="#4EC9B0"
+                                        HorizontalAlignment="Left"
+                                        CornerRadius="2"/>
+                            </Border>
+
+                            <TextBlock x:Name="HighConfidenceText"
+                                       Grid.Column="2"
+                                       Foreground="White"
+                                       FontSize="12"
+                                       TextAlignment="Right"
+                                       VerticalAlignment="Center"
+                                       Margin="8,0,0,0"/>
+                        </Grid>
+
+                        <!-- Medium Confidence -->
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="80"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0"
+                                       Text="Medium (70-89%)"
+                                       Foreground="#DCDCAA"
+                                       FontSize="12"
+                                       VerticalAlignment="Center"/>
+
+                            <Border Grid.Column="1"
+                                    Background="#3F3F46"
+                                    Height="24"
+                                    CornerRadius="2">
+                                <Border x:Name="MediumConfidenceBar"
+                                        Background="#DCDCAA"
+                                        HorizontalAlignment="Left"
+                                        CornerRadius="2"/>
+                            </Border>
+
+                            <TextBlock x:Name="MediumConfidenceText"
+                                       Grid.Column="2"
+                                       Foreground="White"
+                                       FontSize="12"
+                                       TextAlignment="Right"
+                                       VerticalAlignment="Center"
+                                       Margin="8,0,0,0"/>
+                        </Grid>
+
+                        <!-- Low Confidence -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="80"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0"
+                                       Text="Low (&lt;70%)"
+                                       Foreground="#F48771"
+                                       FontSize="12"
+                                       VerticalAlignment="Center"/>
+
+                            <Border Grid.Column="1"
+                                    Background="#3F3F46"
+                                    Height="24"
+                                    CornerRadius="2">
+                                <Border x:Name="LowConfidenceBar"
+                                        Background="#F48771"
+                                        HorizontalAlignment="Left"
+                                        CornerRadius="2"/>
+                            </Border>
+
+                            <TextBlock x:Name="LowConfidenceText"
+                                       Grid.Column="2"
+                                       Foreground="White"
+                                       FontSize="12"
+                                       TextAlignment="Right"
+                                       VerticalAlignment="Center"
+                                       Margin="8,0,0,0"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Additional Stats -->
+                <TextBlock Text="Additional Statistics"
+                           Foreground="#CCCCCC"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,12"/>
+
+                <Border Background="#2D2D30"
+                        BorderBrush="#3F3F46"
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        Padding="16">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                       Text="Total Lines Extracted"
+                                       Foreground="#CCCCCC"
+                                       FontSize="12"/>
+                            <TextBlock x:Name="TotalLinesText"
+                                       Grid.Column="1"
+                                       Foreground="White"
+                                       FontSize="12"
+                                       FontWeight="SemiBold"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                       Text="Date Range"
+                                       Foreground="#CCCCCC"
+                                       FontSize="12"/>
+                            <TextBlock x:Name="DateRangeText"
+                                       Grid.Column="1"
+                                       Foreground="White"
+                                       FontSize="12"
+                                       FontWeight="SemiBold"/>
+                        </Grid>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                       Text="OCR Engine"
+                                       Foreground="#CCCCCC"
+                                       FontSize="12"/>
+                            <TextBlock x:Name="EngineText"
+                                       Grid.Column="1"
+                                       Foreground="White"
+                                       FontSize="12"
+                                       FontWeight="SemiBold"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

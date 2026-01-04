@@ -1,0 +1,117 @@
+<Window x:Class="AutoCaptureOCR.App.Views.SettingsInfoDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Settings"
+        Height="400"
+        Width="550"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="#1E1E1E"
+        BorderBrush="#007ACC"
+        BorderThickness="1">
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <TextBlock Grid.Row="0"
+                   Text="Application Settings"
+                   FontSize="18"
+                   FontWeight="SemiBold"
+                   Foreground="White"
+                   Margin="0,0,0,16"/>
+
+        <!-- Content -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock TextWrapping="Wrap" Foreground="#CCCCCC" FontSize="13" Margin="0,0,0,16">
+                    Settings are configured via a YAML configuration file.
+                    You can edit this file to customize file naming, image formats, OCR behavior, and more.
+                </TextBlock>
+
+                <Border Background="#252526" Padding="12" Margin="0,0,0,16" CornerRadius="4">
+                    <StackPanel>
+                        <TextBlock Text="Configuration File Location:"
+                                   FontWeight="SemiBold"
+                                   Foreground="#569CD6"
+                                   FontSize="12"
+                                   Margin="0,0,0,8"/>
+
+                        <TextBox x:Name="ConfigPathTextBox"
+                                 IsReadOnly="True"
+                                 FontFamily="Consolas"
+                                 FontSize="11"
+                                 Background="#1E1E1E"
+                                 Foreground="#CCCCCC"
+                                 BorderBrush="#3F3F46"
+                                 Padding="8,6"
+                                 Margin="0,0,0,8"/>
+
+                        <Button Content="📋 Copy Path"
+                                Width="120"
+                                Height="32"
+                                HorizontalAlignment="Left"
+                                Background="#3F3F46"
+                                Foreground="White"
+                                BorderBrush="#555555"
+                                Click="CopyPath_Click"
+                                Margin="0,0,0,8"/>
+
+                        <Button Content="📂 Open Folder"
+                                Width="120"
+                                Height="32"
+                                HorizontalAlignment="Left"
+                                Background="#007ACC"
+                                Foreground="White"
+                                BorderBrush="#007ACC"
+                                Click="OpenFolder_Click"/>
+                    </StackPanel>
+                </Border>
+
+                <TextBlock Text="Configurable Settings:"
+                           FontWeight="SemiBold"
+                           Foreground="#569CD6"
+                           FontSize="12"
+                           Margin="0,0,0,8"/>
+
+                <Border Background="#252526" Padding="12" CornerRadius="4">
+                    <TextBlock TextWrapping="Wrap" Foreground="#CCCCCC" FontSize="11" FontFamily="Consolas">
+naming:
+  default_pattern: "capture_{session}_{timestamp}"
+  timestamp_format: "yyyyMMdd_HHmmss"
+
+capture:
+  default_image_format: "PNG"  # or "JPG"
+  jpeg_quality: 95
+  organize_by_date: false
+
+ocr:
+  auto_process: true
+  queue_delay: 500  # milliseconds
+
+ui:
+  show_notifications: true
+  notification_duration: 3000  # milliseconds
+                    </TextBlock>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Close Button -->
+        <Button Grid.Row="2"
+                Content="Close"
+                Width="80"
+                Height="36"
+                HorizontalAlignment="Right"
+                Background="#007ACC"
+                Foreground="White"
+                BorderBrush="#007ACC"
+                Margin="0,16,0,0"
+                Click="Close_Click"/>
+    </Grid>
+</Window>

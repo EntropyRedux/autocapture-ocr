@@ -1,0 +1,350 @@
+<Window x:Class="AutoCaptureOCR.App.Views.ExportDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Export Data"
+        Height="550"
+        Width="600"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="#1E1E1E"
+        BorderBrush="#007ACC"
+        BorderThickness="1"
+        KeyDown="Window_KeyDown">
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <TextBlock Grid.Row="0"
+                   Text="Export Project Data"
+                   FontSize="18"
+                   FontWeight="SemiBold"
+                   Foreground="White"
+                   Margin="0,0,0,16"/>
+
+        <!-- Export Info -->
+        <TextBlock x:Name="ExportInfoTextBlock"
+                   Grid.Row="1"
+                   FontSize="12"
+                   Foreground="#808080"
+                   Margin="0,0,0,16"/>
+
+        <!-- Format Selection -->
+        <GroupBox Grid.Row="2"
+                  Header="Export Format"
+                  Foreground="#CCCCCC"
+                  BorderBrush="#3F3F46"
+                  Margin="0,0,0,16">
+            <StackPanel Margin="8">
+                <RadioButton x:Name="JsonRadioButton"
+                             Content="JSON - Full structured data with all details"
+                             Foreground="White"
+                             FontSize="12"
+                             IsChecked="True"
+                             Margin="0,0,0,8"
+                             Checked="FormatRadioButton_Checked"/>
+                <RadioButton x:Name="CsvRadioButton"
+                             Content="CSV - Spreadsheet-compatible tabular format"
+                             Foreground="White"
+                             FontSize="12"
+                             Margin="0,0,0,12"
+                             Checked="FormatRadioButton_Checked"/>
+
+                <!-- OCR Text Format (CSV only) -->
+                <StackPanel x:Name="OcrTextFormatPanel"
+                            Visibility="Collapsed"
+                            Margin="20,0,0,0">
+                    <TextBlock Text="OCR Text Format:"
+                               Foreground="#CCCCCC"
+                               FontSize="11"
+                               Margin="0,0,0,4"/>
+                    <ComboBox x:Name="OcrTextFormatComboBox"
+                              FontSize="12"
+                              Height="28"
+                              Background="#2D2D30"
+                              Foreground="White"
+                              BorderBrush="#3F3F46"
+                              BorderThickness="1"
+                              SelectedIndex="0">
+                        <ComboBox.Style>
+                            <Style TargetType="ComboBox">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ComboBox">
+                                            <Grid>
+                                                <ToggleButton x:Name="ToggleButton"
+                                                            Grid.Column="2"
+                                                            Focusable="false"
+                                                            IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                            ClickMode="Press"
+                                                            Background="{TemplateBinding Background}"
+                                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                                            BorderThickness="{TemplateBinding BorderThickness}">
+                                                    <ToggleButton.Style>
+                                                        <Style TargetType="ToggleButton">
+                                                            <Setter Property="Template">
+                                                                <Setter.Value>
+                                                                    <ControlTemplate TargetType="ToggleButton">
+                                                                        <Border Background="{TemplateBinding Background}"
+                                                                               BorderBrush="{TemplateBinding BorderBrush}"
+                                                                               BorderThickness="{TemplateBinding BorderThickness}"
+                                                                               CornerRadius="3">
+                                                                            <Grid>
+                                                                                <Grid.ColumnDefinitions>
+                                                                                    <ColumnDefinition/>
+                                                                                    <ColumnDefinition Width="20"/>
+                                                                                </Grid.ColumnDefinitions>
+                                                                                <ContentPresenter Grid.Column="0"
+                                                                                                Margin="8,0,0,0"
+                                                                                                HorizontalAlignment="Left"
+                                                                                                VerticalAlignment="Center"
+                                                                                                Content="{TemplateBinding Content}"/>
+                                                                                <Path Grid.Column="1"
+                                                                                     HorizontalAlignment="Center"
+                                                                                     VerticalAlignment="Center"
+                                                                                     Data="M 0 0 L 4 4 L 8 0 Z"
+                                                                                     Fill="White"/>
+                                                                            </Grid>
+                                                                        </Border>
+                                                                        <ControlTemplate.Triggers>
+                                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                                <Setter Property="Background" Value="#3F3F46"/>
+                                                                            </Trigger>
+                                                                        </ControlTemplate.Triggers>
+                                                                    </ControlTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </Style>
+                                                    </ToggleButton.Style>
+                                                </ToggleButton>
+                                                <ContentPresenter x:Name="ContentSite"
+                                                                IsHitTestVisible="False"
+                                                                Content="{TemplateBinding SelectionBoxItem}"
+                                                                ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                                ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                                Margin="8,0,20,0"
+                                                                VerticalAlignment="Center"
+                                                                HorizontalAlignment="Left"/>
+                                                <Popup x:Name="Popup"
+                                                      Placement="Bottom"
+                                                      IsOpen="{TemplateBinding IsDropDownOpen}"
+                                                      AllowsTransparency="True"
+                                                      Focusable="False"
+                                                      PopupAnimation="Slide">
+                                                    <Grid x:Name="DropDown"
+                                                         SnapsToDevicePixels="True"
+                                                         MinWidth="{TemplateBinding ActualWidth}"
+                                                         MaxHeight="200">
+                                                        <Border x:Name="DropDownBorder"
+                                                               Background="#2D2D30"
+                                                               BorderBrush="#007ACC"
+                                                               BorderThickness="1"
+                                                               CornerRadius="3"/>
+                                                        <ScrollViewer Margin="4,6,4,6"
+                                                                    SnapsToDevicePixels="True">
+                                                            <StackPanel IsItemsHost="True"
+                                                                      KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                                        </ScrollViewer>
+                                                    </Grid>
+                                                </Popup>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ComboBox.Style>
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="ComboBoxItem">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Padding" Value="8,4"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ComboBoxItem">
+                                            <Border Background="{TemplateBinding Background}"
+                                                   BorderThickness="0"
+                                                   Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#007ACC"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#094771"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                        <ComboBoxItem Content="Continuous - All text in one line (best for Excel)"/>
+                        <ComboBoxItem Content="Lines - Each line on new line (preserves layout)"/>
+                        <ComboBoxItem Content="Structured - Line numbers [Line N] (for analysis)"/>
+                        <ComboBoxItem Content="JSON - Full OCR data with confidence (for AI/ML)"/>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Export Options -->
+        <GroupBox Grid.Row="3"
+                  Header="Export Options"
+                  Foreground="#CCCCCC"
+                  BorderBrush="#3F3F46"
+                  Margin="0,0,0,16">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="8">
+                    <CheckBox x:Name="IncludeOCRCheckBox"
+                              Content="Include OCR Results"
+                              Foreground="White"
+                              FontSize="12"
+                              IsChecked="True"
+                              Margin="0,0,0,8"/>
+
+                    <CheckBox x:Name="IncludeBoundingBoxesCheckBox"
+                              Content="Include Bounding Boxes (JSON only)"
+                              Foreground="White"
+                              FontSize="12"
+                              IsChecked="True"
+                              Margin="0,0,0,8"
+                              IsEnabled="{Binding IsChecked, ElementName=IncludeOCRCheckBox}"/>
+
+                    <CheckBox x:Name="IncludeMetadataCheckBox"
+                              Content="Include Metadata"
+                              Foreground="White"
+                              FontSize="12"
+                              IsChecked="True"
+                              Margin="0,0,0,8"/>
+
+                    <CheckBox x:Name="IncludeThumbnailsCheckBox"
+                              Content="Include Thumbnails (Base64, JSON only)"
+                              Foreground="White"
+                              FontSize="12"
+                              IsChecked="False"
+                              Margin="0,0,0,8"/>
+
+                    <CheckBox x:Name="CompressOutputCheckBox"
+                              Content="Compress Output (GZIP, JSON only)"
+                              Foreground="White"
+                              FontSize="12"
+                              IsChecked="False"
+                              Margin="0,0,0,8"/>
+
+                    <Border Background="#2D2D30"
+                            BorderBrush="#007ACC"
+                            BorderThickness="1"
+                            CornerRadius="3"
+                            Padding="12"
+                            Margin="0,8,0,0">
+                        <StackPanel>
+                            <TextBlock Text="Export Preview"
+                                       Foreground="#007ACC"
+                                       FontSize="11"
+                                       FontWeight="SemiBold"
+                                       Margin="0,0,0,4"/>
+                            <TextBlock x:Name="PreviewTextBlock"
+                                       Foreground="#CCCCCC"
+                                       FontSize="10"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </GroupBox>
+
+        <!-- Status -->
+        <TextBlock x:Name="StatusTextBlock"
+                   Grid.Row="4"
+                   Foreground="#808080"
+                   FontSize="11"
+                   Margin="0,0,0,12"
+                   TextWrapping="Wrap"/>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="5"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button x:Name="CancelButton"
+                    Content="Cancel"
+                    Width="90"
+                    Height="32"
+                    Margin="0,0,8,0"
+                    Background="#2D2D30"
+                    Foreground="White"
+                    BorderBrush="#3F3F46"
+                    BorderThickness="1"
+                    FontSize="13"
+                    Click="CancelButton_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            CornerRadius="3">
+                                        <ContentPresenter HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#3F3F46"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Button x:Name="ExportButton"
+                    Content="Export"
+                    Width="90"
+                    Height="32"
+                    Background="#007ACC"
+                    Foreground="White"
+                    BorderBrush="#007ACC"
+                    BorderThickness="1"
+                    FontSize="13"
+                    Click="ExportButton_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            CornerRadius="3">
+                                        <ContentPresenter HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#1C97EA"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>
