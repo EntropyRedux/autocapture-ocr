@@ -1,4 +1,4 @@
-# AutoCapture-OCR v2.0
+# AutoCapture-OCR
 
 **Project-Based Screen Capture with Automated OCR**
 
