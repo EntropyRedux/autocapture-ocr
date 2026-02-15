@@ -229,8 +229,6 @@ See [SESSION_LOG.md](SESSION_LOG.md) for detailed development history.
 
 ## 📜 License
 
-[Specify your license]
-
 ---
 
 **AutoCapture-OCR v2.0** - Capture, Organize, Analyze
