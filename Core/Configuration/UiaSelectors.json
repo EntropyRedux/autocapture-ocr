@@ -1,0 +1,20 @@
+{
+  "selectors": [
+    {
+      "appName": "Claude",
+      "processName": "Claude",
+      "turnContainerAutomationId": "chat-messages",
+      "userTurnClassName": "user-message",
+      "assistantTurnClassName": "assistant-message",
+      "textExtractionMode": "TextPattern"
+    },
+    {
+      "appName": "ChatGPT",
+      "processName": "ChatGPT",
+      "turnContainerAutomationId": "chat-container",
+      "userTurnClassName": "user-turn",
+      "assistantTurnClassName": "assistant-turn",
+      "textExtractionMode": "TextPattern"
+    }
+  ]
+}

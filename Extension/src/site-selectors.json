@@ -1,0 +1,27 @@
+{
+  "claude.ai": {
+    "turnSelector": "[data-testid='chat-turn'], .font-claude-message, [data-is-streaming]",
+    "roleAttr": "data-role",
+    "roleFallback": {
+      "user": ".font-user-message, [data-testid='user-message']",
+      "assistant": ".font-claude-message, [data-testid='assistant-message']"
+    },
+    "contentSelector": ".grid-cols-1, .prose",
+    "messageIdAttr": "data-message-id",
+    "streamingIndicatorSelector": "[data-is-streaming='true']"
+  },
+  "chatgpt.com": {
+    "turnSelector": "[data-message-author-role]",
+    "roleAttr": "data-message-author-role",
+    "contentSelector": ".markdown, .whitespace-pre-wrap",
+    "messageIdAttr": "data-message-id",
+    "streamingIndicatorSelector": ".result-streaming"
+  },
+  "chat.openai.com": {
+    "turnSelector": "[data-message-author-role]",
+    "roleAttr": "data-message-author-role",
+    "contentSelector": ".markdown, .whitespace-pre-wrap",
+    "messageIdAttr": "data-message-id",
+    "streamingIndicatorSelector": ".result-streaming"
+  }
+}

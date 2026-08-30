@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "AutoCapture-OCR ChatCapture Extension",
+  "version": "3.0.0",
+  "description": "Passive background archival of AI chat conversations to AutoCapture-OCR desktop app.",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://claude.ai/*",
+    "https://chatgpt.com/*",
+    "https://chat.openai.com/*"
+  ],
+  "background": {
+    "service_worker": "dist/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://claude.ai/*",
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*"
+      ],
+      "js": ["dist/content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
